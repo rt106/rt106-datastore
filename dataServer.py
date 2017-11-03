@@ -134,8 +134,8 @@ def get_series_list(patient,study):
 
 # Get the types of data included in a given series
 @app.route('/v1/series/<path:series>/types', methods=['GET','OPTIONS'])
-def get_series_type(path):
-    return datastore.get_series_type(path)
+def get_series_type(series):
+    return datastore.get_series_type(series)
 
 # Get list of primary series and the paths for a given patient ID and study ID.
 @app.route('/v1/patients/<patient>/imaging/studies/<study>/primary', methods=['GET','OPTIONS'])
@@ -246,10 +246,10 @@ def get_result_format(slide,region,pipeline,execid):
 def get_result_path(slide,region,pipelineid,execid):
     return datastore.get_result_path(slide,region,pipelineid,execid)
 
-## Get the path location of the result with given pipelineid and execid (i.e. the path down to directory level, not including filename.)
-#@app.route('/v1/pathology/slides/<slide>/regions/<region>/results/<pipelineid>/steps/<execid>/location', methods=['GET','OPTIONS'])
-#def get_result_path_location(slide,region,pipelineid,execid):
-#    return datastore.get_result_path_location(slide,region,pipelineid,execid)
+# Get the full path with image file names of the result with given pipelineid and execid.
+@app.route('/v1/pathology/slides/<slide>/regions/<region>/results/<pipelineid>/steps/<execid>/instances', methods=['GET','OPTIONS'])
+def get_result_image_path(slide,region,pipelineid,execid):
+    return datastore.get_result_image_path(slide,region,pipelineid,execid)
 
 # Get the pipelineid list for a given slide-region
 @app.route('/v1/pathology/slides/<slide>/regions/<region>/results', methods=['GET','OPTIONS'])
