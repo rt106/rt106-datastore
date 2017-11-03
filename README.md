@@ -1,6 +1,9 @@
 # Datastore
 [![Build Status](http://ideker.crd.ge.com:8888/buildStatus/icon?job=rt106/rt106-datastore/master)](http://ideker.crd.ge.com:8888/job/rt106/job/rt106-datastore/job/master/)
 
+_Copyright (c) General Electric Company, 2017.  All rights reserved._
+
+
 Base container for Rt 106 data stores.  This container defines the datastore API, and requires one of the datastore implementations.
 
 ### Docker container

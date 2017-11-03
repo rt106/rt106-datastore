@@ -1,3 +1,5 @@
+# Copyright (c) General Electric Company, 2017.  All rights reserved.
+
 # Datastore - abstraction above any data storage mechanism, e.g. filesystem, S3, etc.
 #
 # Data may be stored using alternate back-end storage mechanisms.
