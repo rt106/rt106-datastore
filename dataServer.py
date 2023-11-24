@@ -14,12 +14,13 @@
 
 import glob, logging, os, sys, uuid, time, argparse
 import tarfile, shutil, weakref, threading, hashlib
-import urlparse, json, requests
+import json, requests
 import boto3, botocore
-import dicom
+#import pydicom
 
 from logging.handlers import RotatingFileHandler
-from urlparse import urlparse
+from urllib.parse import urlparse
+
 from flask import Flask, jsonify, abort, request, make_response, send_file
 from flask_cors import CORS, cross_origin
 
@@ -61,9 +62,10 @@ def not_found(error):
 def bad_request(error):
     return make_response(jsonify({'error':'Bad Request'}), 400)
 
-@app.before_first_request
-def show_configuration():
-    app.logger.debug(os.environ)
+# before_first_request has been deprecated...  Can we just leave this out?
+#@app.before_first_request
+#def show_configuration():
+#    app.logger.debug(os.environ)
 
 
 @app.before_request

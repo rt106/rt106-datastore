@@ -1,12 +1,15 @@
-# Copyright (c) General Electric Company, 2017.  All rights reserved.
+# Copyright (c) General Electric Company, 2023.  All rights reserved.
 
-FROM debian:jessie-slim
+FROM debian:bullseye-slim
 
-# install dependencies
-RUN buildDeps='python-pip' \
-    && set -x \
-    && apt-get -y update && apt-get install -y $buildDeps --no-install-recommends \
-    && pip install flask flask-restful flask-cors requests boto3 pydicom junit-xml pytest-cov \
+# install Python 3 and Pip 3
+RUN apt-get -y update && apt-get install -y $buildDeps --no-install-recommends \
+    && apt-get install -y python3 python3-pip \
+    && pip install --upgrade pip && hash -r
+
+# install needed dependencies for Python 3
+RUN pip install flask pika boto3 requests junit-xml pytest-cov \
+    && pip install flask-restful flask-cors pydicom \
     && pip install --upgrade setuptools
 
 # install datastore code
