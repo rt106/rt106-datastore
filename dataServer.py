@@ -156,6 +156,12 @@ def get_image_list(series):
 def get_uploading_path(patient,pipeline,execid,study):
     return datastore.get_uploading_path(patient,pipeline,execid,study)
 
+# Get the path to upload a series in a pipeline that has multiple outputs
+@app.route('/v1/patients/<patient>/results/pipeline/<pipeline>/steps/<step>/tag/<tag>/imaging/<study>/<series>', methods=['GET','OPTIONS'])
+def get_uploading_path_pipeline(patient,pipeline,step,tag,study,series):
+    return datastore.get_uploading_path_pipeline(patient,pipeline,step,tag,study,series)
+
+
 # Routine for downloading a series.
 @app.route('/v1/series/<path:series>/<format>',methods=['GET'])
 def retrieve_series(series,format) :
