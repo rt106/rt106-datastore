@@ -151,16 +151,40 @@ def get_primary_series_list(patient,study):
 def get_image_list(series):
     return datastore.get_image_list(series)
 
+# Get the result executions for algorithm pipeline.
+@app.route('/v1/patients/<patient>/results/executions', methods=['GET','OPTIONS'])
+def get_result_executions(patient):
+    return datastore.get_result_executions(patient)
+
+# Get the result steps for a pipeline execution.
+@app.route('/v1/patients/<patient>/results/executions/<execid>', methods=['GET','OPTIONS'])
+def get_result_steps(patient,execid):
+    return datastore.get_result_steps(patient,execid)
+# Get the result tags for a step in a pipeline execution.
+@app.route('/v1/patients/<patient>/results/executions/<execid>/steps/<step>/tags', methods=['GET','OPTIONS'])
+def get_result_tags(patient,execid,step):
+    return datastore.get_result_tags(patient,execid,step)
+
+# Get the result imaging studies within a tag for a step in a pipeline execution.
+# (Would there ever be more than one study?  Allow this possibility just in case.)
+@app.route('/v1/patients/<patient>/results/executions/<execid>/steps/<step>/tags/<tag>/imaging', methods=['GET','OPTIONS'])
+def get_result_study(patient,execid,step,tag):
+    return datastore.get_result_study(patient,execid,step,tag)
+
+# Get the result series within an imaging study for a tag for a step in a pipeline execution.
+@app.route('/v1/patients/<patient>/results/executions/<execid>/steps/<step>/tags/<tag>/imaging/studies/<study>/series', methods=['GET','OPTIONS'])
+def get_result_series(patient,execid,step,tag,study):
+    return datastore.get_result_series(patient,execid,step,tag,study)
+
+# Get the result path for a series for a study for a tag for a step in a pipeline execution.
+@app.route('/v1/patients/<patient>/results/executions/<execid>/steps/<step>/tags/<tag>/imaging/studies/<study>/series/<series>', methods=['GET','OPTIONS'])
+def get_result_series_path(patient,execid,step,tag,study,series):
+    return datastore.get_result_series_path(patient,execid,step,tag,study,series)
+
 # Get the path to upload a series
 @app.route('/v1/patients/<patient>/results/<pipeline>/steps/<execid>/imaging/studies/<study>/series', methods=['GET','OPTIONS'])
 def get_uploading_path(patient,pipeline,execid,study):
     return datastore.get_uploading_path(patient,pipeline,execid,study)
-
-# Get the path to upload a series in a pipeline that has multiple outputs
-@app.route('/v1/patients/<patient>/results/pipeline/<pipeline>/steps/<step>/tag/<tag>/imaging/<study>/<series>', methods=['GET','OPTIONS'])
-def get_uploading_path_pipeline(patient,pipeline,step,tag,study,series):
-    return datastore.get_uploading_path_pipeline(patient,pipeline,step,tag,study,series)
-
 
 # Routine for downloading a series.
 @app.route('/v1/series/<path:series>/<format>',methods=['GET'])
