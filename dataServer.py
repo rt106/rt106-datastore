@@ -160,6 +160,7 @@ def get_result_executions(patient):
 @app.route('/v1/patients/<patient>/results/executions/<execid>', methods=['GET','OPTIONS'])
 def get_result_steps(patient,execid):
     return datastore.get_result_steps(patient,execid)
+
 # Get the result tags for a step in a pipeline execution.
 @app.route('/v1/patients/<patient>/results/executions/<execid>/steps/<step>/tags', methods=['GET','OPTIONS'])
 def get_result_tags(patient,execid,step):
