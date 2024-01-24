@@ -197,6 +197,10 @@ def retrieve_series(series,format) :
 def upload_series(series,format):
     return datastore.upload_series(series,format)
 
+@app.route('/v1/series/<path:series>/<format>/force',methods=['POST'])
+def upload_series_force(series,format):
+    return datastore.upload_series_force(series,format)
+
 # Get the type for an instance, eg, "tiff", "DICOM", "csv", "JPEG" etc.
 @app.route('/v1/instance/<path:instance>/type',methods=['GET'])
 def get_instance_type(instance):
