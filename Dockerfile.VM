@@ -11,8 +11,8 @@ ENV https_prpxy=$https_proxy
 ENV HTTP_PROXY=$http_proxy
 ENV HTTP_PROXYS=$https_proxy
 
-#RUN groupadd g01034722
-#RUN useradd dp116731 -g g01034722 -d /home/dp116731 -s /bin/bash
+RUN groupadd g01034722
+RUN useradd dp116731 -g g01034722 -d /home/dp116731 -s /bin/bash
 
 # install Python 3 and Pip 3
 RUN apt-get -y update && apt-get install -y $buildDeps --no-install-recommends \
