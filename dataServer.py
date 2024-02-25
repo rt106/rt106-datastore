@@ -182,7 +182,49 @@ def get_result_series(patient,execid,step,tag,study):
 def get_result_series_path(patient,execid,step,tag,study,series):
     return datastore.get_result_series_path(patient,execid,step,tag,study,series)
 
-# Get the path to upload a series
+# Functions for datastore access based on 2024 data hierarchy.
+
+# Get the formats available for a primary data element for a patient.  Usually there will be just one format, but there could be more.
+@app.route('/v1/patients/<patient>/exams/<exam>/elements/<element>/formats', methods=['GET','OPTIONS'])
+def get_patient_data_formats(patient,exam,element):
+    return datastore.get_patient_data_formats(patient,exam,element)
+
+# Get the path to a primary data element for a patient.  When the format is dicom, also pass in the study and series names.
+@app.route('/v1/patients/<patient>/exams/<exam>/elements/<element>/formats/dicom/<study>/<series>', methods=['GET','OPTIONS'])
+def get_patient_data_path_dicom(patient,exam,element,study,series):
+    return datastore.get_patient_data_path(patient,exam,element,'dicom',study,series)
+
+# Get the path to a primary data element for a patient.  When the format is not dicom, assume the data will be a single file, and the datastore will find the file if it exists.
+@app.route('/v1/patients/<patient>/exams/<exam>/elements/<element>/formats/<format>', methods=['GET','OPTIONS'])
+def get_patient_data_path_file(patient,exam,element,format):
+    return datastore.get_patient_data_path(patient,exam,element,format,'','')
+
+# Get the root path to a result set for an algorithm execution for a patient.  (Metadata may be stored here.)
+@app.route('/v1/patients/<patient>/executions/<execid>/analytics/<analytic>/results/root', methods=['GET','OPTIONS'])
+def get_patient_result_top_level_path(patient,execid,analytic):
+    return datastore.get_patient_result_top_level_path(patient,execid,analytic)
+
+# Get the formats available for derived data resulting from algorithm execution.
+@app.route('/v1/patients/<patient>/executions/<execid>/analytics/<analytic>/results/<result>/formats', methods=['GET','OPTIONS'])
+def get_patient_result_data_formats(patient,execid,analytic,result):
+    return datastore.get_patient_result_data_formats(patient,execid,analytic,result)
+
+#@app.route('/v1/patients/<patient>/executions/<execid>/analytics/<analytic>/results/<result>/formats/<format>', methods=['GET','OPTIONS'])
+#def get_patient_result_data_path(patient,execid,analytic,result,format):
+#    return datastore.get_patient_result_data_path(patient,execid,analytic,result,format)
+
+# Get the path to a derived (algorithm-generated) data element for a patient.  When the format is dicom, also pass in the study and series names.
+@app.route('/v1/patients/<patient>/executions/<execid>/analytics/<analytic>/results/<result>/formats/dicom/<study>/<series>', methods=['GET','OPTIONS'])
+def get_patient_result_data_path_dicom(patient,execid,analytic,result,study,series):
+    return datastore.get_patient_result_data_path(patient,execid,analytic,result,'dicom',study,series)
+
+# Get the path to a derived (algorithm-generated) data element for a patient.  When the format is not dicom, assume the data will be a single file, and the datastore will find the file if it exists.
+@app.route('/v1/patients/<patient>/executions/<execid>/analytics/<analytic>/results/<result>/formats/<format>', methods=['GET','OPTIONS'])
+def get_patient_result_data_path_file(patient,execid,analytic,result,format):
+    return datastore.get_patient_result_data_path(patient,execid,analytic,result,format,'','')
+
+
+# Get the path to upload a series (This is replaced by the calls above and will be deprecated.)
 @app.route('/v1/patients/<patient>/results/<pipeline>/steps/<execid>/imaging/studies/<study>/series', methods=['GET','OPTIONS'])
 def get_uploading_path(patient,pipeline,execid,study):
     return datastore.get_uploading_path(patient,pipeline,execid,study)
