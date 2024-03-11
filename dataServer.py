@@ -184,6 +184,16 @@ def get_result_series_path(patient,execid,step,tag,study,series):
 
 # Functions for datastore access based on 2024 data hierarchy.
 
+# Returns what exams are available for a given patient.  TODO-document
+@app.route('/v1/patients/<patient>/exams', methods=['GET','OPTIONS'])
+def get_patient_exams(patient):
+    return datastore.get_patient_exams(patient)
+
+# Returns what elements are available for a given patient and exam.  TODO-document
+@app.route('/v1/patients/<patient>/exams/<exam>/elements', methods=['GET','OPTIONS'])
+def get_patient_elements(patient,exam):
+    return datastore.get_patient_elements(patient,exam)
+
 # Get the formats available for a primary data element for a patient.  Usually there will be just one format, but there could be more.
 @app.route('/v1/patients/<patient>/exams/<exam>/elements/<element>/formats', methods=['GET','OPTIONS'])
 def get_patient_data_formats(patient,exam,element):
@@ -198,6 +208,21 @@ def get_patient_data_path_dicom(patient,exam,element,study,series):
 @app.route('/v1/patients/<patient>/exams/<exam>/elements/<element>/formats/<format>', methods=['GET','OPTIONS'])
 def get_patient_data_path_file(patient,exam,element,format):
     return datastore.get_patient_data_path(patient,exam,element,format,'','')
+
+# Get the list of result execution IDs for an algorithm pipeline.  TODO-document
+@app.route('/v1/patients/<patient>/executions', methods=['GET','OPTIONS'])
+def get_patient_executions(patient):
+    return datastore.get_patient_executions(patient)
+
+# Get the list of algorithms that have been executed for an execution ID.  TODO-document
+@app.route('/v1/patients/<patient>/executions/<execid>/analytics', methods=['GET','OPTIONS'])
+def get_patient_analytics(patient,execid):
+    return datastore.get_patient_analytics(patient,execid)
+
+# Get the list of result types that have been generated for the execution of the analytic.  TODO-document
+@app.route('/v1/patients/<patient>/executions/<execid>/analytics/<analytic>/results', methods=['GET','OPTIONS'])
+def get_patient_results(patient,execid,analytic):
+    return datastore.get_patient_results(patient,execid,analytic)
 
 # Get the root path to a result set for an algorithm execution for a patient.  (Metadata may be stored here.)
 @app.route('/v1/patients/<patient>/executions/<execid>/analytics/<analytic>/results/root', methods=['GET','OPTIONS'])
