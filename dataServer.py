@@ -151,6 +151,7 @@ def get_primary_series_list(patient,study):
 def get_image_list(series):
     return datastore.get_image_list(series)
 
+'''
 # Get the result executions for algorithm pipeline.
 @app.route('/v1/patients/<patient>/results/executions', methods=['GET','OPTIONS'])
 def get_result_executions(patient):
@@ -181,15 +182,17 @@ def get_result_series(patient,execid,step,tag,study):
 @app.route('/v1/patients/<patient>/results/executions/<execid>/steps/<step>/tags/<tag>/imaging/studies/<study>/series/<series>', methods=['GET','OPTIONS'])
 def get_result_series_path(patient,execid,step,tag,study,series):
     return datastore.get_result_series_path(patient,execid,step,tag,study,series)
+    
+'''
 
 # Functions for datastore access based on 2024 data hierarchy.
 
-# Returns what exams are available for a given patient.  TODO-document
+# Returns what exams are available for a given patient.
 @app.route('/v1/patients/<patient>/exams', methods=['GET','OPTIONS'])
 def get_patient_exams(patient):
     return datastore.get_patient_exams(patient)
 
-# Returns what elements are available for a given patient and exam.  TODO-document
+# Returns what elements are available for a given patient and exam.
 @app.route('/v1/patients/<patient>/exams/<exam>/elements', methods=['GET','OPTIONS'])
 def get_patient_elements(patient,exam):
     return datastore.get_patient_elements(patient,exam)
@@ -209,17 +212,17 @@ def get_patient_data_path_dicom(patient,exam,element,study,series):
 def get_patient_data_path_file(patient,exam,element,format):
     return datastore.get_patient_data_path(patient,exam,element,format,'','')
 
-# Get the list of result execution IDs for an algorithm pipeline.  TODO-document
+# Get the list of result execution IDs for an algorithm pipeline.
 @app.route('/v1/patients/<patient>/executions', methods=['GET','OPTIONS'])
 def get_patient_executions(patient):
     return datastore.get_patient_executions(patient)
 
-# Get the list of algorithms that have been executed for an execution ID.  TODO-document
+# Get the list of algorithms that have been executed for an execution ID.
 @app.route('/v1/patients/<patient>/executions/<execid>/analytics', methods=['GET','OPTIONS'])
 def get_patient_analytics(patient,execid):
     return datastore.get_patient_analytics(patient,execid)
 
-# Get the list of result types that have been generated for the execution of the analytic.  TODO-document
+# Get the list of result types that have been generated for the execution of the analytic.
 @app.route('/v1/patients/<patient>/executions/<execid>/analytics/<analytic>/results', methods=['GET','OPTIONS'])
 def get_patient_results(patient,execid,analytic):
     return datastore.get_patient_results(patient,execid,analytic)
@@ -249,10 +252,12 @@ def get_patient_result_data_path_file(patient,execid,analytic,result,format):
     return datastore.get_patient_result_data_path(patient,execid,analytic,result,format,'','')
 
 
+'''
 # Get the path to upload a series (This is replaced by the calls above and will be deprecated.)
 @app.route('/v1/patients/<patient>/results/<pipeline>/steps/<execid>/imaging/studies/<study>/series', methods=['GET','OPTIONS'])
 def get_uploading_path(patient,pipeline,execid,study):
     return datastore.get_uploading_path(patient,pipeline,execid,study)
+'''
 
 # Routine for downloading a series.
 @app.route('/v1/series/<path:series>/<format>',methods=['GET'])
