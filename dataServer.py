@@ -233,21 +233,17 @@ def get_patient_result_top_level_path(patient,execid,analytic):
     return datastore.get_patient_result_top_level_path(patient,execid,analytic)
 
 # Get the formats available for derived data resulting from algorithm execution.
-@app.route('/v1/patients/<patient>/executions/<execid>/analytics/<analytic>/results/<result>/formats', methods=['GET','OPTIONS'])
+@app.route('/v1/patients/<patient>/executions/<execid>/analytics/<analytic>/results/<path:result>/formats', methods=['GET','OPTIONS'])
 def get_patient_result_data_formats(patient,execid,analytic,result):
     return datastore.get_patient_result_data_formats(patient,execid,analytic,result)
 
-#@app.route('/v1/patients/<patient>/executions/<execid>/analytics/<analytic>/results/<result>/formats/<format>', methods=['GET','OPTIONS'])
-#def get_patient_result_data_path(patient,execid,analytic,result,format):
-#    return datastore.get_patient_result_data_path(patient,execid,analytic,result,format)
-
 # Get the path to a derived (algorithm-generated) data element for a patient.  When the format is dicom, also pass in the study and series names.
-@app.route('/v1/patients/<patient>/executions/<execid>/analytics/<analytic>/results/<result>/formats/dicom/<study>/<series>', methods=['GET','OPTIONS'])
+@app.route('/v1/patients/<patient>/executions/<execid>/analytics/<analytic>/results/<path:result>/formats/dicom/<study>/<series>', methods=['GET','OPTIONS'])
 def get_patient_result_data_path_dicom(patient,execid,analytic,result,study,series):
     return datastore.get_patient_result_data_path(patient,execid,analytic,result,'dicom',study,series)
 
 # Get the path to a derived (algorithm-generated) data element for a patient.  When the format is not dicom, assume the data will be a single file, and the datastore will find the file if it exists.
-@app.route('/v1/patients/<patient>/executions/<execid>/analytics/<analytic>/results/<result>/formats/<format>', methods=['GET','OPTIONS'])
+@app.route('/v1/patients/<patient>/executions/<execid>/analytics/<analytic>/results/<path:result>/formats/<format>', methods=['GET','OPTIONS'])
 def get_patient_result_data_path_file(patient,execid,analytic,result,format):
     return datastore.get_patient_result_data_path(patient,execid,analytic,result,format,'','')
 
